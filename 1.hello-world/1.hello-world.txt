@@ -1,0 +1,7 @@
+docker run hello-world
+
+docker ps -a
+
+docker run -it ubuntu bash
+
+docker run -d -p 81:80 --name webserver nginx

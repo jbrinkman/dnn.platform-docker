@@ -1,0 +1,8 @@
+docker run -it ubuntu bash
+
+apt-get update
+apt-get install aptitude
+
+exit
+
+docker commit [container id] jbrinkman/ubuntu

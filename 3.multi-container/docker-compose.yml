@@ -1,0 +1,27 @@
+version: '2.1'
+
+services:
+ web:
+  image: jbrinkman/dnn-web
+  ports:
+   - "81:80"
+  depends_on:
+   - db
+  tty:
+    true
+
+ db:
+  image: jbrinkman/dnn-db
+  mem_limit: 2048m
+  environment:
+      - ACCEPT_EULA=Y
+      - sa_password=dnnHost1
+  expose:
+   - "1433"
+  tty:
+    true
+
+networks:
+ default:
+  external:
+   name: "nat"
