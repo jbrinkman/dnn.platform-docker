@@ -11,7 +11,7 @@ services:
     true
 
  db:
-  image: jbrinkman/dnn-db
+  build: .\database\
   mem_limit: 2048m
   environment:
       - ACCEPT_EULA=Y

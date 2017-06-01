@@ -16,14 +16,19 @@ param(
 [string]$dnn_hash
 )
 
+$dir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
+
 switch ($command.ToLower()) {
     'start' {
-        $dir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
-        docker-compose up -d 
+        docker-compose --file "$dir\docker-compose.yml" --project-name dnnplatform up -d 
 
-        $container = docker ps -q --filter ancestor=jbrinkman/dnn-web --filter name=web | select-object -first 1
+        $container = docker ps -q --filter ancestor=jbrinkman/dnn-web --filter name=dnnplatform_web | select-object -first 1
+
+        $ip = docker inspect -f "{{.NetworkSettings.Networks.nat.IPAddress}}" $container
+
+        start-process "http://$ip"
     }
     'stop' {
-        docker-compose down
+        docker-compose --file "$dir\docker-compose.yml" --project-name dnnplatform down
     }
 }
